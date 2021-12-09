@@ -12,17 +12,18 @@ abstract class BaseViewHolder(itemView: View) : ViewHolder(itemView) {
     @SuppressLint("UseSparseArrays")
     var viewHashMap = HashMap<Int, View>()
 
+    @SuppressWarnings("unchecked")
     fun <T : View> getView(@IdRes id: Int): T {
-        var view = viewHashMap.get(id)
+        var view = viewHashMap[id]
         if (view == null) {
             view = itemView.findViewById(id)
-            viewHashMap.put(id, view)
+            viewHashMap[id] = view
         }
         return view as T
     }
 
     fun setText(@IdRes id: Int, @Nullable text: String) {
-        getView<TextView>(id).setText(text)
+        getView<TextView>(id).text = text
     }
 }
 

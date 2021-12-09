@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val password = et_password.text.toString()
         val code = et_code.text.toString()
 
-        var user = User(username, password, code)
+        val user = User(username, password, code)
         if (verify(user)) {
             CacheUtils.save(usernameKey, username)
             CacheUtils.save(passwordKey, password)
@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun verify(user: User): Boolean {
-        if (user.username.length < 4) {
+        if (user.username?.length ?: 0 < 4) {
             toast("用户名不合法")
             return false
         }
-        if (user.password.length < 4) {
+        if (user.password?.length ?: 0 < 4) {
             toast("密码不合法")
             return false
         }

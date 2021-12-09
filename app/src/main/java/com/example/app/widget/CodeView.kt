@@ -1,39 +1,29 @@
-package com.example.app.widget;
+package com.example.app.widget
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.Gravity
 
-import com.example.app.R;
+import com.example.app.R
 
-import java.util.Random;
+import java.util.Random
 
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatTextView
 import com.example.core.utils.dp2px
 
+class CodeView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null) :
+    AppCompatTextView(context, attrs) {
 
-public class CodeView : AppCompatTextView {
-
-    constructor(context: Context?) : this(context, null)
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        gravity = Gravity.CENTER
-        setBackgroundColor(getContext().getColor(R.color.colorPrimary))
-        setTextColor(Color.WHITE)
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.color = getContext().getColor(R.color.colorAccent)
-        paint.strokeWidth = dp2px(6f)
-        updateCode()
+    var paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        color = getContext().getColor(R.color.colorAccent)
+        strokeWidth = 6f.dp2px()
     }
-
-    var paint = Paint()
 
     private val codeList = arrayOf(
         "kotlin",
@@ -46,11 +36,19 @@ public class CodeView : AppCompatTextView {
         "tcp/ip"
     )
 
+    init {
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        gravity = Gravity.CENTER
+        setBackgroundColor(getContext().getColor(R.color.colorPrimary))
+        setTextColor(Color.WHITE)
+
+        updateCode()
+    }
 
     fun updateCode() {
         val random = Random().nextInt(codeList.size)
         val code = codeList[random]
-        setText(code)
+        text = code
 
     }
 

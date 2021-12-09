@@ -7,16 +7,14 @@ import java.util.*
 
 @SuppressLint("StaticFieldLeak")
 object CacheUtils {
+
     @SuppressLint("StaticFieldLeak")
-    val context = BaseApplication.currentApplication()
+    val context = BaseApplication.currentApplication
 
-    val SP = context.getSharedPreferences("Hencode", Context.MODE_PRIVATE)
+    val SP = context.getSharedPreferences("Hencoder", Context.MODE_PRIVATE)
 
-    fun save(key: String, value: String) {
-        SP.edit().putString(key, value).apply()
-    }
+    fun save(key: String, value: String) = SP.edit().putString(key, value).apply()
 
-    fun get(key: String): String? {
-        return SP.getString(key, null)
-    }
+    fun get(key: String) = SP.getString(key, null)
+
 }

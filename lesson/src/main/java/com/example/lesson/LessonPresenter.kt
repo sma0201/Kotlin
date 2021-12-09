@@ -7,16 +7,10 @@ import com.example.lesson.entity.Lesson
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
-class LessonPresenter {
+class LessonPresenter constructor(var activity: LessonActivity) {
 
     companion object {
         private const val LESSON_PATH = "lessons"
-    }
-
-    private var activity: LessonActivity
-
-    constructor(activity: LessonActivity) {
-        this.activity = activity
     }
 
     private var lessons: List<Lesson> = ArrayList()
@@ -26,27 +20,20 @@ class LessonPresenter {
     fun fetchData() {
         get<List<Lesson>>(LESSON_PATH, type, object : EntityCallback<List<Lesson>> {
 
-
             override fun onFailure(message: String?) {
-                activity.runOnUiThread(Runnable { toast(message!!) })
+                activity.runOnUiThread { toast(message!!) }
             }
 
             override fun onSuccess(entity: List<Lesson>) {
-                lessons = lessons
-                activity.runOnUiThread(Runnable { activity.showResult(lessons) })
+                lessons = entity
+                activity.runOnUiThread { activity.showResult(lessons) }
 
             }
         })
     }
 
     fun showPlayback() {
-        val playbackLessons: MutableList<Lesson> = ArrayList()
-        for (lesson in lessons) {
-            if (lesson.state === Lesson.State.PLAYBACK) {
-                playbackLessons.add(lesson)
-            }
-        }
-        activity.showResult(playbackLessons)
+        activity.showResult(lessons.filter { it.state === Lesson.State.PLAYBACK })
     }
 
 }
